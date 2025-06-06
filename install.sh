@@ -577,7 +577,7 @@ jobs:
         script: |
           # The install.sh handles user creation and initial setup.
           # For updates, pull and restart.
-          cd /home/nodeuser/topshelf-api # Change to the app's user directory
+          cd /home/nodeuser/topshelf-api # Change to the app'\''s user directory
           git pull origin main
           npm install --production
           npm run build
@@ -587,6 +587,7 @@ jobs:
     create_file ".github/workflows/ci.yml" "$CI_YML" "GitHub Actions CI/CD"
     
     # Security workflow
+    log_info "🔄 Setting up GitHub Actions..."
     SECURITY_YML='name: Security Audit
 
 on:
