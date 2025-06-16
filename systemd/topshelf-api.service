@@ -1,0 +1,16 @@
+[Unit]
+Description=Topshelf API and WebSocket Server
+After=network.target
+
+[Service]
+Environment=NODE_ENV=production
+# The systemd service expects the .env file in /etc/. You can change this path if needed.
+EnvironmentFile=/etc/topshelf.env
+WorkingDirectory=/home/patrick/github/api
+ExecStart=/usr/bin/node /home/patrick/github/api/build/server.js
+Restart=always
+User=patrick
+Group=patrick
+
+[Install]
+WantedBy=multi-user.target
