@@ -1,0 +1,33 @@
+name: Update Nexus Submodule Ref
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  update-nexus:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout nexus_orchestrator_project
+        uses: actions/checkout@v4
+        with:
+          repository: peteywee/nexus_orchestrator_project
+          token: ${{ secrets.NEXUS_PUSH_TOKEN }}
+          path: nexus
+          submodules: recursive
+
+      - name: Pull latest API into submodule
+        run: |
+          cd nexus/api
+          git checkout main
+          git pull origin main
+
+      - name: Commit submodule update
+        run: |
+          cd nexus
+          git config user.name "GitHub Action"
+          git config user.email "actions@github.com"
+          git add api
+          git commit -m "Auto-update API submodule ref"
+          git push origin main
